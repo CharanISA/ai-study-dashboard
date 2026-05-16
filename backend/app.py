@@ -67,6 +67,25 @@ def delete_session(id):
     return jsonify({"message": "Session deleted"})
 
 
+@app.route("/weekly-hours", methods=["GET"])
+def weekly_hours():
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT date, SUM(hours)
+        FROM study_sessions
+        GROUP BY date
+        ORDER BY date
+    """)
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    return jsonify([
+        {"date": row[0], "hours": row[1]}
+        for row in rows
+    ])
 
 @app.route("/sessions", methods=["GET"])
 def get_sessions():
