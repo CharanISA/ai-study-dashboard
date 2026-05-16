@@ -56,6 +56,18 @@ def add_session():
     return jsonify({"message": "Study session added successfully"})
 
 
+@app.route("/sessions/<int:id>", methods=["DELETE"])
+def delete_session(id):
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM study_sessions WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Session deleted"})
+
+
+
 @app.route("/sessions", methods=["GET"])
 def get_sessions():
     conn = sqlite3.connect(DB_NAME)
