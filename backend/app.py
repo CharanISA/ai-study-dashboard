@@ -87,6 +87,27 @@ def weekly_hours():
         for row in rows
     ])
 
+
+@app.route("/subject-hours", methods=["GET"])
+def subject_hours():
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT subject, SUM(hours)
+        FROM study_sessions
+        GROUP BY subject
+        ORDER BY SUM(hours) DESC
+    """)
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    return jsonify([
+        {"subject": row[0], "hours": row[1]}
+        for row in rows
+    ])
+
 @app.route("/sessions", methods=["GET"])
 def get_sessions():
     conn = sqlite3.connect(DB_NAME)
