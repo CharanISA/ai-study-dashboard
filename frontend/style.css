@@ -9,7 +9,7 @@ h1 {
 }
 
 .card {
-    background: white;
+    background: black;
     padding: 20px;
     margin: 20px auto;
     max-width: 700px;
@@ -26,8 +26,8 @@ input, textarea, button {
 }
 
 button {
-    background: black;
-    color: white;
+    background: white;
+    color: red;
     border: none;
     cursor: pointer;
 }
